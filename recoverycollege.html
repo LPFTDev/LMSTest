@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lincolnshire Partnership NHS Foundation Trust - Recovery College</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 12.5%;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding-top: 50px;
+        }
+        .burger-menu a {
+            padding: 15px 20px;
+            text-decoration: none;
+            color: #0072ce;
+            border-bottom: 1px solid #ddd;
+        }
+        .burger-menu a:hover {
+            background-color: #f4f4f4;
+        }
+        .burger-icon {
+            cursor: pointer;
+            display: none;
+        }
+        h1 {
+            text-align: center;
+            color: #0072ce;
+        }
+        .login-form, .course-selection, .register-form, .profile-page, .forgot-password-form {
+            display: none;
+        }
+        .login-form.active, .course-selection.active, .register-form.active, .profile-page.active, .forgot-password-form.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0072ce;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #005bb5;
+        }
+        .course-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .course-box a {
+            text-decoration: none;
+            color: #0072ce;
+        }
+        .course-box a:hover {
+            text-decoration: underline;
+        }
+        .course-status {
+            display: flex;
+            align-items: center;
+        }
+        .course-status img {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="burger-icon" id="burger-icon" onclick="toggleMenu()">☰</div>
+            <h1>Recovery College</h1>
+            <img src="https://www.lpft.nhs.uk/assets/images/logo.png" alt="Lincolnshire Partnership NHS Foundation Trust Logo">
+        </div>
+        <div class="burger-menu" id="burger-menu">
+            <a href="#" onclick="showProfilePage()">Profile</a>
+            <a href="#" onclick="showCourseSelection()">Courses</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+        <h2>Learner Portal</h2>
+        <div class="login-form active">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password">
+            </div>
+            <div class="form-group">
+                <button onclick="login()">Login</button>
+            </div>
+            <div class="form-group">
+                <button onclick="showRegisterForm()">Register</button>
+            </div>
+            <div class="form-group">
+                <button onclick="showForgotPasswordForm()">Forgot Password</button>
+            </div>
+        </div>
+        <div class="register-form">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="new-email">New Email</label>
+                <input type="email" id="new-email" placeholder="Enter new email">
+            </div>
+            <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" placeholder="Enter new password">
+            </div>
+            <div class="form-group">
+                <button onclick="register()">Register</button>
+            </div>
+            <div class="form-group">
+                <button onclick="showLoginForm()">Back to Login</button>
+            </div>
+        </div>
+        <div class="forgot-password-form">
+            <div class="form-group">
+                <label for="forgot-email">Email</label>
+                <input type="email" id="forgot-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <button onclick="forgotPassword()">Submit</button>
+            </div>
+            <div class="form-group">
+                <button onclick="showLoginForm()">Back to Login</button>
+            </div>
+        </div>
+        <div class="course-selection">
+            <h2>Course Selection</h2>
+            <p>Welcome, <span id="welcome-name"></span>!</p>
+            <div class="course-box">
+                <a href="https://lpftdev.github.io/ArtTest/#/lessons/-UqjCcn262i4inexYiK2wlGJR8bUmNoY" target="_blank" onclick="markComplete('course1')">Articulate Course</a>
+                <div class="course-status">
+                    <span id="status-course1">Incomplete</span>
+                    <img id="icon-course1" src="https://img.icons8.com/ios/50/000000/cancel.png" alt="Incomplete">
+                </div>
+            </div>
+            <div class="course-box">
+                <a href="https://github.com/placeholder-course-2" target="_blank" onclick="markComplete('course2')">Course 2</a>
+                <div class="course-status">
+                    <span id="status-course2">Complete</span>
+                    <img id="icon-course2" src="https://img.icons8.com/ios/50/000000/checkmark.png" alt="Complete">
+                </div>
+            </div>
+            <div class="course-box">
+                <a href="https://github.com/placeholder-course-3" target="_blank" onclick="markComplete('course3')">Course 3</a>
+                <div class="course-status">
+                    <span id="status-course3">Incomplete</span>
+                    <img id="icon-course3" src="https://img.icons8.com/ios/50/000000/cancel.png" alt="Incomplete">
+                </div>
+            </div>
+            <div class="course-box">
+                <a href="https://github.com/placeholder-course-4" target="_blank" onclick="markComplete('course4')">Course 4</a>
+                <div class="course-status">
+                    <span id="status-course4">Complete</span>
+                    <img id="icon-course4" src="https://img.icons8.com/ios/50/000000/checkmark.png" alt="Complete">
+                </div>
+            </div>
+        </div>
+        <div class="profile-page">
+            <h2>Profile</h2>
+            <div class="form-group">
+                <label for="profile-name">Name</label>
+                <input type="text" id="profile-name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="profile-email">Email</label>
+                <input type="email" id="profile-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <button onclick="updateProfile()">Update Profile</button>
+            </div>
+            <div class="form-group">
+                <button onclick="showCourseSelection()">Back to Courses</button>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var users = JSON.parse(localStorage.getItem('users')) || [{ name: 'Test User', email: 'test@test.com', password: 'test' }];
+        var currentUser = null;
+
+        function toggleMenu() {
+            var menu = document.getElementById('burger-menu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'flex';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        function login() {
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var user = users.find(user => user.email === email && user.password === password);
+            if (user) {
+                currentUser = user;
+                document.querySelector('.login-form').classList.remove('active');
+                document.querySelector('.course-selection').classList.add('active');
+                document.getElementById('burger-icon').style.display = 'block';
+                document.getElementById('welcome-name').textContent = currentUser.name;
+                loadCourseStatus();
+            } else {
+                alert('Invalid email or password');
+            }
+        }
+
+        function showRegisterForm() {
+            document.querySelector('.login-form').classList.remove('active');
+            document.querySelector('.register-form').classList.add('active');
+        }
+
+        function showLoginForm() {
+            document.querySelector('.register-form').classList.remove('active');
+            document.querySelector('.forgot-password-form').classList.remove('active');
+            document.querySelector('.login-form').classList.add('active');
+        }
+
+        function register() {
+            var name = document.getElementById('name').value;
+            var newEmail = document.getElementById('new-email').value;
+            var newPassword = document.getElementById('new-password').value;
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var userExists = users.some(user => user.email === newEmail);
+            if (!emailPattern.test(newEmail)) {
+                alert('Please enter a valid email address');
+            } else if (userExists) {
+                alert('Email already exists');
+            } else if (name && newEmail && newPassword) {
+                users.push({ name: name, email: newEmail, password: newPassword });
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('User registered successfully');
+                showLoginForm();
+            } else {
+                alert('Please enter your name, email, and password');
+            }
+        }
+
+        function showForgotPasswordForm() {
+            document.querySelector('.login-form').classList.remove('active');
+            document.querySelector('.forgot-password-form').classList.add('active');
+        }
+
+        function forgotPassword() {
+            var forgotEmail = document.getElementById('forgot-email').value;
+            var user = users.find(user => user.email === forgotEmail);
+            if (user) {
+                emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                    to_email: forgotEmail,
+                    message: "Your password is: " + user.password
+                })
+                .then(function(response) {
+                    alert('An email has been sent to ' + forgotEmail + ' with your password.');
+                }, function(error) {
+                    alert('Failed to send email. Please try again later.');
+                });
+            } else {
+                alert('Email not found');
+            }
+        }
+
+        function showProfilePage() {
+            document.getElementById('profile-name').value = currentUser.name;
+            document.getElementById('profile-email').value = currentUser.email;
+            document.querySelector('.course-selection').classList.remove('active');
+            document.querySelector('.profile-page').classList.add('active');
+        }
+
+        function showCourseSelection() {
+            document.querySelector('.profile-page').classList.remove('active');
+            document.querySelector('.course-selection').classList.add('active');
+        }
+
+        function updateProfile() {
+            var newName = document.getElementById('profile-name').value;
+            var newEmail = document.getElementById('profile-email').value;
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var userExists = users.some(user => user.email === newEmail && user !== currentUser);
+            if (!emailPattern.test(newEmail)) {
+                alert('Please enter a valid email address');
+            } else if (userExists) {
+                alert('Email already exists');
+            } else if (newName && newEmail) {
+                currentUser.name = newName;
+                currentUser.email = newEmail;
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Profile updated successfully');
+                showCourseSelection();
+            } else {
+                alert('Please enter your name and email');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            document.querySelector('.course-selection').classList.remove('active');
+            document.querySelector('.profile-page').classList.remove('active');
+            document.querySelector('.login-form').classList.add('active');
+            document.getElementById('burger-icon').style.display = 'none';
+        }
+
+        function markComplete(courseId) {
+            localStorage.setItem(courseId + '-' + currentUser.email, 'complete');
+            loadCourseStatus();
+        }
+
+        function loadCourseStatus() {
+            var courses = ['course1', 'course2', 'course3', 'course4'];
+            courses.forEach(function(courseId) {
+                var status = localStorage.getItem(courseId + '-' + currentUser.email);
+                if (status === 'complete') {
+                    document.getElementById('status-' + courseId).textContent = 'Complete';
+                    document.getElementById('icon-' + courseId).src = 'https://img.icons8.com/ios/50/000000/checkmark.png';
+                } else {
+                    document.getElementById('status-' + courseId).textContent = 'Incomplete';
+                    document.getElementById('icon-' + courseId).src = 'https://img.icons8.com/ios/50/000000/cancel.png';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
