@@ -189,27 +189,6 @@ margin-left: 10px;
 <img id="icon-course1" src="https://img.icons8.com/ios/50/000000/cancel.png" alt="Incomplete">
 </div>
 </div>
-            <div class="course-box">
-                <a href="https://github.com/placeholder-course-2" target="_blank" onclick="markComplete('course2')">Course 2</a>
-                <div class="course-status">
-                    <span id="status-course2">Complete</span>
-                    <img id="icon-course2" src="https://img.icons8.com/ios/50/000000/checkmark.png" alt="Complete">
-                </div>
-            </div>
-            <div class="course-box">
-                <a href="https://github.com/placeholder-course-3" target="_blank" onclick="markComplete('course3')">Course 3</a>
-                <div class="course-status">
-                    <span id="status-course3">Incomplete</span>
-                    <img id="icon-course3" src="https://img.icons8.com/ios/50/000000/cancel.png" alt="Incomplete">
-                </div>
-            </div>
-            <div class="course-box">
-                <a href="https://github.com/placeholder-course-4" target="_blank" onclick="markComplete('course4')">Course 4</a>
-                <div class="course-status">
-                    <span id="status-course4">Complete</span>
-                    <img id="icon-course4" src="https://img.icons8.com/ios/50/000000/checkmark.png" alt="Complete">
-                </div>
-            </div>
 </div>
 <div class="profile-page">
 <h2>Profile</h2>
@@ -351,6 +330,7 @@ document.querySelector('.course-selection').classList.remove('active');
 document.querySelector('.profile-page').classList.remove('active');
 document.querySelector('.login-form').classList.add('active');
 document.getElementById('burger-icon').style.display = 'none';
+document.getElementById('burger-menu').style.display = 'none'; // Hide the side menu on logout
 }
 
 function markComplete(courseId) {
@@ -359,8 +339,7 @@ loadCourseStatus();
 }
 
 function loadCourseStatus() {
-            var courses = ['course1', 'course2', 'course3', 'course4'];
-            var courses = ['course1'];
+var courses = ['course1'];
 courses.forEach(function(courseId) {
 var status = localStorage.getItem(courseId + '-' + currentUser.email);
 if (status === 'complete') {
