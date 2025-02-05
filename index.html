@@ -119,7 +119,7 @@
         <div class="header">
             <div class="burger-icon" id="burger-icon" onclick="toggleMenu()">☰</div>
             <h1>Recovery College</h1>
-            <img src="https://github.com/LPFTDev/LMSTest/blob/gh-pages/lincolnshire-partnership-logo-small-optimised.png" alt="Lincolnshire Partnership NHS Foundation Trust Logo">
+            <img src="https://raw.githubusercontent.com/LPFTDev/LMSTest/gh-pages/lincolnshire-partnership-logo-small-optimised.png" alt="Lincolnshire Partnership NHS Foundation Trust Logo">
         </div>
         <div class="burger-menu" id="burger-menu">
             <a href="#" onclick="showProfilePage()">Profile</a>
@@ -186,27 +186,6 @@
                 <div class="course-status">
                     <span id="status-course1">Incomplete</span>
                     <img id="icon-course1" src="https://img.icons8.com/ios/50/000000/cancel.png" alt="Incomplete">
-                </div>
-            </div>
-            <div class="course-box">
-                <a href="https://github.com/placeholder-course-2" target="_blank" onclick="markComplete('course2')">Course 2</a>
-                <div class="course-status">
-                    <span id="status-course2">Complete</span>
-                    <img id="icon-course2" src="https://img.icons8.com/ios/50/000000/checkmark.png" alt="Complete">
-                </div>
-            </div>
-            <div class="course-box">
-                <a href="https://github.com/placeholder-course-3" target="_blank" onclick="markComplete('course3')">Course 3</a>
-                <div class="course-status">
-                    <span id="status-course3">Incomplete</span>
-                    <img id="icon-course3" src="https://img.icons8.com/ios/50/000000/cancel.png" alt="Incomplete">
-                </div>
-            </div>
-            <div class="course-box">
-                <a href="https://github.com/placeholder-course-4" target="_blank" onclick="markComplete('course4')">Course 4</a>
-                <div class="course-status">
-                    <span id="status-course4">Complete</span>
-                    <img id="icon-course4" src="https://img.icons8.com/ios/50/000000/checkmark.png" alt="Complete">
                 </div>
             </div>
         </div>
@@ -358,7 +337,7 @@
         }
 
         function loadCourseStatus() {
-            var courses = ['course1', 'course2', 'course3', 'course4'];
+            var courses = ['course1'];
             courses.forEach(function(courseId) {
                 var status = localStorage.getItem(courseId + '-' + currentUser.email);
                 if (status === 'complete') {
